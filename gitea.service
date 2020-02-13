@@ -1,0 +1,22 @@
+[Unit]
+Description=TVHeadend Container
+After=docker.service
+Requires=docker.service
+
+[Service]
+ExecStartPre=-/bin/docker create \
+              --rm \
+              --interactive \
+              --name tvheadend \
+              --publish 9981:9981 \
+              --publish 9982:9982 \
+              --device /dev/dri \
+              --device /dev/dvb \
+              --mount type=bind,source=/etc/tvheadend,target=/home/hts/.hts/tvheadend \
+              --mount type=bind,source=/opt/recordings,target=/home/hts/rec \
+              hetsh/tvheadend
+ExecStart=/bin/docker start --attach tvheadend
+ExecStop=/bin/docker stop tvheadend
+
+[Install]
+WantedBy=multi-user.target
