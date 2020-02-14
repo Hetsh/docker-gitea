@@ -9,7 +9,7 @@ USER "$APP_USER"
 ARG REPO_DIR="/var/lib/gitea/repos/"
 VOLUME ["$REPO_DIR"]
 
-EXPOSE 80       443
-#      HTTP     HTTPS
+EXPOSE 3000
+#      HTTP
 
 ENTRYPOINT /usr/bin/gitea web -c /etc/gitea/app.ini
