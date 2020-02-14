@@ -24,23 +24,19 @@ docker build --tag "$APP_NAME" .
 
 if confirm_action "Test image?"; then
 	# Set up temporary directory
-	TMP_CONF_DIR=$(mktemp -d "/tmp/$APP_NAME-CONF-XXXXXXXXXX")
-	add_cleanup "rm -rf $TMP_CONF_DIR"
-	TMP_REC_DIR=$(mktemp -d "/tmp/$APP_NAME-REC-XXXXXXXXXX")
-	add_cleanup "rm -rf $TMP_REC_DIR"
+	TMP_DIR=$(mktemp -d "/tmp/$APP_NAME-XXXXXXXXXX")
+	add_cleanup "rm -rf $TMP_DIR"
 
 	# Apply permissions, UID matches process user
-	APP_UID=1359
-	chown -R "$APP_UID":"$APP_UID" "$TMP_CONF_DIR" "$TMP_REC_DIR"
+	APP_UID=1360
+	chown -R "$APP_UID":"$APP_UID" "$TMP_DIR"
 
 	# Start the test
 	docker run \
 	--rm \
 	--interactive \
-	--publish 80:80/tcp \
-	--publish 443:443/tcp \
-	--mount type=bind,source="$TMP_REC_DIR",target="" \
-	--mount type=bind,source="$TMP_CONF_DIR",target="" \
+	--publish 3000:3000/tcp \
+	--mount type=bind,source="$TMP_DIR",target="/var/lib/gitea/repos" \
 	--name "$APP_NAME" \
 	"$APP_NAME"
 fi
