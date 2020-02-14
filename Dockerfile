@@ -3,10 +3,11 @@ RUN apk add --no-cache \
     gitea=1.10.1-r0
 
 ARG APP_USER="gitea"
-RUN adduser --disabled-password --uid 1360 "$APP_USER"
+RUN sed -i "s|$APP_USER:x:100:101|$APP_USER:x:1360:1360|" "/etc/passwd" && \
+    chown -R "$APP_USER" /var/lib/gitea /etc/gitea /var/log/gitea
 USER "$APP_USER"
 
-ARG REPO_DIR="/var/lib/gitea/repos/"
+ARG REPO_DIR="/var/lib/gitea/repos"
 VOLUME ["$REPO_DIR"]
 
 EXPOSE 3000
