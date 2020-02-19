@@ -1,22 +1,21 @@
 [Unit]
-Description=TVHeadend Container
+Description=Gitea container
 After=docker.service
 Requires=docker.service
 
 [Service]
 ExecStartPre=-/bin/docker create \
-              --rm \
-              --interactive \
-              --name tvheadend \
-              --publish 9981:9981 \
-              --publish 9982:9982 \
-              --device /dev/dri \
-              --device /dev/dvb \
-              --mount type=bind,source=/etc/tvheadend,target=/home/hts/.hts/tvheadend \
-              --mount type=bind,source=/opt/recordings,target=/home/hts/rec \
-              hetsh/tvheadend
-ExecStart=/bin/docker start --attach tvheadend
-ExecStop=/bin/docker stop tvheadend
+			  --rm \
+			  --interactive \
+			  --name gitea \
+			  --publish 2999:2999 \
+			  --publish 3000:3000 \
+			  --mount type=bind,source=/etc/gitea/app.ini,target=/etc/gitea/app.ini
+			  --mount type=bind,source=/etc/gitea/data,target=/var/lib/gitea
+			  --mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly
+			  hetsh/gitea
+ExecStart=/bin/docker start --attach gitea
+ExecStop=/bin/docker stop gitea
 
 [Install]
 WantedBy=multi-user.target
