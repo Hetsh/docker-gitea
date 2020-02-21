@@ -2,7 +2,7 @@
 
 
 # Abort on any error
-set -eu
+set -e -u
 
 # Simpler git usage, relative file paths
 CWD=$(dirname "$0")
@@ -26,18 +26,6 @@ if confirm_action "Test image?"; then
 	# Set up temporary directory
 	TMP_DIR=$(mktemp -d "/tmp/$APP_NAME-XXXXXXXXXX")
 	add_cleanup "rm -rf $TMP_DIR"
-	echo "[repository]
-ROOT        = /var/lib/gitea/repos ;change this path to your repos
-SCRIPT_TYPE = sh
-
-[server]
-START_SSH_SERVER = true
-SSH_PORT         = 2999
-STATIC_ROOT_PATH = /usr/share/webapps/gitea
-APP_DATA_PATH    = /var/lib/gitea
-
-[log]
-ROOT_PATH = /var/log/gitea" > "$TMP_DIR/app.ini"
 
 	# Apply permissions, UID matches process user
 	APP_UID=1360
@@ -47,9 +35,8 @@ ROOT_PATH = /var/log/gitea" > "$TMP_DIR/app.ini"
 	docker run \
 	--rm \
 	--interactive \
-	--publish 2999:2999/tcp \
+	--publish 3022:3022/tcp \
 	--publish 3000:3000/tcp \
-	--mount type=bind,source="$TMP_DIR/app.ini",target="/etc/gitea/app.ini" \
 	--mount type=bind,source="$TMP_DIR",target="/var/lib/gitea" \
 	--mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
 	--name "$APP_NAME" \

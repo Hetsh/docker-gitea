@@ -2,7 +2,7 @@
 
 
 # Abort on any error
-set -eu
+set -e -u
 
 # Simpler git usage, relative file paths
 CWD=$(dirname "$0")
@@ -10,23 +10,20 @@ cd "$CWD"
 
 # Load helpful functions
 source libs/common.sh
-source libs/alpine.sh
+source libs/docker.sh
 
 # Check dependencies
 assert_dependency "jq"
 assert_dependency "curl"
 
-# Current version of docker image
-register_current_version
+# Base image
+update_image "library/alpine" "Alpine Linux" "\d{8}"
 
-# Alpine Linux
-update_image "x86_64" "(\d+\.)+\d+"
-
-# Gitea
-update_pkg "gitea" "Gitea" "true" "community" "(\d+\.)+\d+-r\d+"
-
-# OpenSSH
-update_pkg "openssh" "OpenSSH" "false" "main" "\d+\.\d+_p\d+-r\d+"
+# Packages
+ARCH="x86_64"
+BASE_PKG_URL="https://pkgs.alpinelinux.org/package/edge"
+update_pkg "gitea" "Gitea" "true" "$BASE_PKG_URL/community/$ARCH" "(\d+\.)+\d+-r\d+"
+update_pkg "openssh" "OpenSSH" "false" "$BASE_PKG_URL/main/$ARCH" "\d+\.\d+_p\d+-r\d+"
 
 if ! updates_available; then
 	echo "No updates available."
