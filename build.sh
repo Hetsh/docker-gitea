@@ -28,7 +28,7 @@ if confirm_action "Test image?"; then
 	add_cleanup "rm -rf $TMP_DIR"
 
 	# Apply permissions, UID matches process user
-	APP_UID=1360
+	APP_UID=$(cat Dockerfile | grep -P -o "ARG APP_UID=\K\d+")
 	chown -R "$APP_UID":"$APP_UID" "$TMP_DIR"
 
 	# Start the test

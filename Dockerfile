@@ -21,9 +21,10 @@ RUN rm -r "$DATA_DIR/"* && \
     chown -R "$APP_USER":"$APP_USER" "$DATA_DIR" "$LOG_DIR"
 VOLUME ["$DATA_DIR", "$LOG_DIR"]
 
-#Ports SSH  HTTP
+#      SSH  HTTP
 EXPOSE 3022 3000
 
 USER "$APP_USER"
+WORKDIR "$DATA_DIR"
 ENV GITEA_WORK_DIR="$DATA_DIR"
 ENTRYPOINT exec /usr/bin/gitea web -c "/etc/gitea/app.ini"

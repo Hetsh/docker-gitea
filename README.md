@@ -3,7 +3,7 @@ Super small code hosting platform.
 
 ## Running the server
 ```bash
-docker run --detach --name gitea --publish 2999:2999 --publish 3000:3000 hetsh/gitea
+docker run --detach --name gitea --publish 3022:3022 --publish 3000:3000 hetsh/gitea
 ```
 
 ## Stopping the container
@@ -22,14 +22,13 @@ SCRIPT_TYPE = sh
 
 [server]
 START_SSH_SERVER = true
-SSH_PORT         = 2999
+SSH_PORT         = 3022
 STATIC_ROOT_PATH = /usr/share/webapps/gitea
-APP_DATA_PATH    = /var/lib/gitea
 
 [log]
 ROOT_PATH = /var/log/gitea
 ```
-Mount the existing configuration and make sure it is readably by the gitea user (id `1360`):
+Mount the existing configuration and make sure the gitea user (id `1360`) has RW permissions:
 ```bash
 docker run --mount type=bind,source=/path/to/config.ini,target=/etc/gitea/app.ini ...
 ```
