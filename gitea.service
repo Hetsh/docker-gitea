@@ -8,7 +8,7 @@ ExecStartPre=-/bin/docker create \
 			  --rm \
 			  --interactive \
 			  --name gitea \
-			  --publish 2999:2999 \
+			  --publish 3022:3022 \
 			  --publish 3000:3000 \
 			  --mount type=bind,source=/etc/gitea/app.ini,target=/etc/gitea/app.ini \
 			  --mount type=bind,source=/etc/gitea/data,target=/var/lib/gitea \
