@@ -4,7 +4,7 @@ RUN apk add --no-cache \
     openssh=8.2_p1-r0
 
 # App user
-ARG APP_UID="1360"
+ARG APP_UID=1360
 ARG APP_USER="gitea"
 RUN addgroup --gid "$APP_UID" "$APP_USER" && \
     sed -i "s|$APP_USER:x:100:101|$APP_USER:x:$APP_UID:$APP_UID|" "/etc/passwd"
@@ -15,9 +15,12 @@ RUN echo -e "[repository]\nSCRIPT_TYPE = sh\n\n[server]\nSTART_SSH_SERVER = true
     chown -R "$APP_USER":"$APP_USER" "$CONF_DIR"
 
 # Volumes
-ARG DATA_DIR="/var/lib/gitea"
+ARG DATA_DIR="/gitea-data"
 ARG LOG_DIR="var/log/gitea"
-RUN rm -r "$DATA_DIR/"* && \
+ARG PREV_HOME="/var/lib/gitea"
+RUN sed -i "s|$PREV_HOME|$DATA_DIR|" "/etc/passwd" && \
+    rm -r "$PREV_HOME" && \
+    mkdir "$DATA_DIR" && \
     chown -R "$APP_USER":"$APP_USER" "$DATA_DIR" "$LOG_DIR"
 VOLUME ["$DATA_DIR", "$LOG_DIR"]
 

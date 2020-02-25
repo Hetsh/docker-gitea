@@ -17,7 +17,7 @@ A configuration wizard will guide you through the initial setup if you run the s
 If you want to reuse a existing configuration, it needs to contain these parameters:
 ```ini
 [repository]
-ROOT        = /var/lib/gitea/repos ;change this path to your repos
+ROOT        = /gitea/repos ;change this path to your repos
 SCRIPT_TYPE = sh
 
 [server]
@@ -43,7 +43,7 @@ chown -R 1360:1360 "$STORAGE"
 The user must have RW access to the storage directory.
 Start the server with the additional mount flags:
 ```bash
-docker run --mount type=bind,source=/path/to/storage,target=/var/lib/gitea ...
+docker run --mount type=bind,source=/path/to/storage,target=/gitea ...
 ```
 
 ## Time
