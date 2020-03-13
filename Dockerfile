@@ -1,6 +1,6 @@
 FROM library/alpine:20200122
 RUN apk add --no-cache \
-    gitea=1.11.2-r1 \
+    gitea=1.11.3-r0 \
     openssh=8.2_p1-r0
 
 # App user
