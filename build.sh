@@ -11,11 +11,11 @@ cd "$CWD"
 # Load helpful functions
 source libs/common.sh
 
-# Check acces do docker daemon
+# Check access to docker daemon
 assert_dependency "docker"
 if ! docker version &> /dev/null; then
-    echo "Docker daemon is not running or you have unsufficient permissions!"
-    exit -1
+	echo "Docker daemon is not running or you have unsufficient permissions!"
+	exit -1
 fi
 
 # Build the image
