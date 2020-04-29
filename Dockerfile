@@ -1,4 +1,4 @@
-FROM library/alpine:20200319
+FROM library/alpine:20200428
 RUN apk add --no-cache \
     gitea=1.11.4-r1 \
     openssh=8.2_p1-r0

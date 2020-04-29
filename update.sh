@@ -16,7 +16,7 @@ source libs/docker.sh
 assert_dependency "jq"
 assert_dependency "curl"
 
-# Base image
+# Alpine Linux
 update_image "library/alpine" "Alpine Linux" "false" "\d{8}"
 
 # Packages
