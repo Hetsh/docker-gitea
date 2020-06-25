@@ -47,6 +47,7 @@ ROOT_PATH = /var/log/gitea" > "$TMP_DIR/app.ini"
 	extract_var DATA_DIR "./Dockerfile" "\"\K[^\"]+"
 	docker run \
 	--rm \
+	--tty \
 	--interactive \
 	--publish 3022:3022/tcp \
 	--publish 3000:3000/tcp \
