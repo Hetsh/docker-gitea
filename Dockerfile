@@ -7,7 +7,7 @@ RUN apk add --no-cache \
 ARG APP_UID=1360
 ARG APP_USER="gitea"
 RUN addgroup --gid "$APP_UID" "$APP_USER" && \
-    sed -i "s|$APP_USER:x:100:101|$APP_USER:x:$APP_UID:$APP_UID|" "/etc/passwd"
+    sed -i "s|$APP_USER:x:[0-9]\+:[0-9]\+|$APP_USER:x:$APP_UID:$APP_UID|" "/etc/passwd"
 
 # Configuration
 ARG CONF_DIR="/etc/gitea"
