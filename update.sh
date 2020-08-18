@@ -26,7 +26,7 @@ update_pkg "gitea" "Gitea" "true" "$BASE_PKG_URL/community/$ARCH" "(\d+\.)+\d+-r
 update_pkg "openssh" "OpenSSH" "false" "$BASE_PKG_URL/main/$ARCH" "\d+\.\d+_p\d+-r\d+"
 
 if ! updates_available; then
-	echo "No updates available."
+	#echo "No updates available."
 	exit 0
 fi
 
