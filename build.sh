@@ -24,8 +24,8 @@ APP_NAME="gitea"
 IMG_NAME="hetsh/$APP_NAME"
 docker build --tag "$IMG_NAME" --tag "$IMG_NAME:$(git describe --tags --abbrev=0)" .
 
-# Start the test
 case "${1-}" in
+	# Test with default configuration
 	"--test")
 		# Set up temporary directory
 		TMP_DIR=$(mktemp -d "/tmp/$APP_NAME-XXXXXXXXXX")
@@ -61,6 +61,7 @@ ROOT_PATH = /var/log/gitea" > "$TMP_DIR/app.ini"
 		--name "$APP_NAME" \
 		"$IMG_NAME"
 	;;
+	# Push image to docker hub
 	"--upload")
 		if ! tag_exists "$IMG_NAME"; then
 			docker push "$IMG_NAME"

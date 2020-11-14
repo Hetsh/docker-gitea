@@ -11,7 +11,7 @@ docker run --detach --name gitea --publish 3022:3022 --publish 3000:3000 hetsh/g
 docker stop gitea
 ```
 
-## Configuring
+## Configuration
 Gitea is configured via its [web interface](http://localhost:3000).
 A configuration wizard will guide you through the initial setup if you run the server for the first time.
 If you want to reuse a existing configuration, it needs to contain these parameters:
