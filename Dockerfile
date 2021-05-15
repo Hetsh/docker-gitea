@@ -16,7 +16,7 @@ RUN echo -e "[repository]\nSCRIPT_TYPE = sh\n\n[server]\nSTART_SSH_SERVER = true
 
 # Volumes
 ARG DATA_DIR="/gitea-data"
-ARG LOG_DIR="var/log/gitea"
+ARG LOG_DIR="/var/log/gitea"
 ARG PREV_HOME="/var/lib/gitea"
 RUN sed -i "s|$PREV_HOME|$DATA_DIR|" "/etc/passwd" && \
     rm -r "$PREV_HOME" && \
