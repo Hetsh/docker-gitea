@@ -17,7 +17,7 @@ assert_dependency "jq"
 assert_dependency "curl"
 
 # Alpine Linux
-update_image "library/alpine" "Alpine Linux" "false" "\d{8}"
+update_image "amd64/alpine" "Alpine Linux" "false" "\d{8}"
 
 # Packages
 ARCH="x86_64"
