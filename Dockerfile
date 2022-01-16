@@ -1,6 +1,6 @@
 FROM amd64/alpine:20210804
 RUN apk add --no-cache \
-        gitea=1.15.9-r0 \
+        gitea=1.15.10-r0 \
         openssh=8.8_p1-r3
 
 # App user
