@@ -1,4 +1,4 @@
-FROM amd64/alpine:20210804
+FROM amd64/alpine:20220316
 RUN apk add --no-cache \
         gitea=1.16.4-r0 \
         openssh=8.8_p1-r4
