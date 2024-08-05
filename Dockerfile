@@ -1,7 +1,7 @@
 FROM amd64/alpine:20240606
 RUN apk add --no-cache \
         gitea=1.22.1-r0 \
-        openssh=9.8_p1-r0
+        openssh=9.8_p1-r1
 
 # App user
 ARG APP_UID=1360
