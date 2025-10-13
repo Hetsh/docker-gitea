@@ -1,5 +1,7 @@
 FROM amd64/alpine:20250108
-RUN apk add --no-cache \
+ARG LAST_UPGRADE="2025-10-13T14:27:15+02:00"
+RUN apk upgrade && \
+    apk add --no-cache \
         gitea=1.24.6-r1 \
         openssh=10.2_p1-r0
 
