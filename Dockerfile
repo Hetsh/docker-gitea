@@ -1,5 +1,5 @@
-FROM amd64/alpine:20250108
-ARG LAST_UPGRADE="2025-12-25T07:34:15+01:00"
+FROM amd64/alpine:20251224
+ARG LAST_UPGRADE="2026-01-03T09:24:16+01:00"
 RUN apk upgrade && \
     apk add --no-cache \
         gitea=1.24.6-r2 \
