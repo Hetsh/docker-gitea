@@ -1,35 +1,29 @@
 FROM amd64/alpine:20251224
 ARG LAST_UPGRADE="2026-01-24T12:21:06+01:00"
 RUN apk upgrade && \
-    apk add --no-cache \
-        gitea=1.25.3-r1 \
-        openssh=10.2_p1-r0
+	apk add --no-cache \
+		gitea=1.25.3-r1 \
+		openssh=10.2_p1-r0
 
 # App user
 ARG APP_UID=1360
+ARG APP_GID="$APP_UID"
 ARG APP_USER="gitea"
-RUN addgroup --gid "$APP_UID" "$APP_USER" && \
-    sed -i "s|$APP_USER:x:[0-9]\+:[0-9]\+|$APP_USER:x:$APP_UID:$APP_UID|" "/etc/passwd"
-
-# Configuration
-ARG CONF_DIR="/etc/gitea"
-RUN echo -e "[repository]\nSCRIPT_TYPE = sh\n\n[server]\nSTART_SSH_SERVER = true\nSSH_PORT = 3022\nSTATIC_ROOT_PATH = /usr/share/webapps/gitea\n\n[log]\nROOT_PATH = /var/log/gitea" > "$CONF_DIR/app.ini" && \
-    chown -R "$APP_USER":"$APP_USER" "$CONF_DIR"
-
-# Volumes
-ARG DATA_DIR="/gitea-data"
-ARG LOG_DIR="/var/log/gitea"
-ARG PREV_HOME="/var/lib/gitea"
-RUN sed -i "s|$PREV_HOME|$DATA_DIR|" "/etc/passwd" && \
-    rm -r "$PREV_HOME" && \
-    mkdir "$DATA_DIR" && \
-    chown -R "$APP_USER":"$APP_USER" "$DATA_DIR" "$LOG_DIR"
-VOLUME ["$DATA_DIR", "$LOG_DIR"]
-
-#      SSH  HTTP
-EXPOSE 3022 3000
+ARG APP_GROUP="$APP_USER"
+ARG DATA_DIR="/gitea"
+RUN deluser \
+		--remove-home \
+		"$APP_USER" && \
+	adduser \
+		--disabled-password \
+		--uid "$APP_UID" \
+		--home "$DATA_DIR" \
+		--gecos "$APP_USER" \
+		--shell /bin/ash \
+		"$APP_USER"
 
 USER "$APP_USER"
 WORKDIR "$DATA_DIR"
-ENV GITEA_WORK_DIR="$DATA_DIR"
-ENTRYPOINT exec /usr/bin/gitea web -c "/etc/gitea/app.ini"
+ENV GITEA_CUSTOM="$DATA_DIR" \
+	GITEA_WORK_DIR="$DATA_DIR"
+ENTRYPOINT ["gitea", "--config", "config/app.ini", "web"]
