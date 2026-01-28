@@ -1,4 +1,4 @@
-FROM amd64/alpine:20251224
+FROM amd64/alpine:20260127
 ARG LAST_UPGRADE="2026-01-24T12:21:06+01:00"
 RUN apk upgrade && \
 	apk add --no-cache \
