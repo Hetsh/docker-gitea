@@ -3,6 +3,7 @@
 
 # This file will be sourced by scripts/build.sh to customize the build process
 
+
 IMG_NAME="hetsh/gitea"
 function test_image {
 	docker run \
