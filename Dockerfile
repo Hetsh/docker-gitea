@@ -1,8 +1,8 @@
-FROM hetsh/alpine:20260127-5
-ARG LAST_UPGRADE="2026-04-06T11:05:31+02:00"
+FROM hetsh/alpine:20260127-6
+ARG LAST_UPGRADE="2026-04-13T15:27:59+02:00"
 RUN apk upgrade --no-cache && \
 	apk add --no-cache \
-		gitea=1.25.4-r1 \
+		gitea=1.25.4-r2 \
 		openssh=10.3_p1-r0
 
 # App user
