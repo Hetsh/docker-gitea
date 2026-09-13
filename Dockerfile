@@ -1,5 +1,5 @@
-FROM hetsh/alpine:20260805-3
-ARG LAST_UPGRADE="2026-09-06T16:22:05+02:00"
+FROM hetsh/alpine:20260805-4
+ARG LAST_UPGRADE="2026-09-13T06:57:08+02:00"
 RUN apk upgrade --no-cache && \
 	apk add --no-cache \
 		gitea=1.27.3-r0 \
